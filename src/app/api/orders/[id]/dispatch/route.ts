@@ -31,10 +31,18 @@ export async function POST(
 
     const smsText = `DistriLogix: Pedido #${orderId} EN RUTA en camion ${truck}. Conductor: ${driver}. Llegada estimada en aprox ${eta} horas a ${order?.city || 'su sucursal'}.`;
 
-    // Despacho de SMS mediante Notify API en AWS EC2
+    // Despacho de SMS mediante Notify API en AWS EC2 con Template y Llave de Idempotencia
     const notifyResult = await dispatchNotification({
       channel: 'Sms',
       recipient: targetPhone.trim(),
+      templateCode: 'DISPATCH_TRACKING',
+      templateVariables: {
+        orderId: String(orderId),
+        camion: String(truck),
+        chofer: String(driver),
+        ciudad: String(order?.city || 'su sucursal'),
+        eta: String(eta),
+      },
       body: smsText,
       idempotencyKey,
       priority: 'High',

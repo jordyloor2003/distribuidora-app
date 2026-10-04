@@ -100,10 +100,20 @@ export async function POST(req: NextRequest) {
       </div>
     `;
 
-    // Despacho de Email a través de la Notify API con Idempotency-Key
+    // Despacho de Email a través de la Notify API con Template y Llave de Idempotencia
     const notifyResult = await dispatchNotification({
       channel: 'Email',
       recipient: email.trim(),
+      templateCode: 'ORDER_CONFIRMATION',
+      templateVariables: {
+        contacto: String(contactName || 'Representante'),
+        empresa: String(companyName),
+        orderId: String(orderId),
+        ruc: String(ruc),
+        ciudad: String(city),
+        direccion: String(address),
+        total: Number(total).toFixed(2),
+      },
       subject: `Confirmación de Pedido Mayorista #${orderId} - DistriLogix S.A.`,
       body: emailHtmlBody,
       idempotencyKey,
