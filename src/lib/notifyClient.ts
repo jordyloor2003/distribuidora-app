@@ -8,8 +8,8 @@ interface TokenCache {
 let cachedToken: TokenCache | null = null;
 
 const NOTIFY_API_URL = process.env.NOTIFY_API_URL || 'http://52.15.152.202';
-const CLIENT_ID = process.env.NOTIFY_CLIENT_ID || 'app_bancamovil_prod';
-const CLIENT_SECRET = process.env.NOTIFY_CLIENT_SECRET || 'sec_99a8b7c6d5e4f3a2b1c0';
+const CLIENT_ID = process.env.NOTIFY_CLIENT_ID || 'app_distribuidora_prod';
+const CLIENT_SECRET = process.env.NOTIFY_CLIENT_SECRET || 'sec_distirbuidora_29842787';
 
 /**
  * Obtiene un token Bearer JWT válido utilizando Client Credentials OAuth2 / B2B.
@@ -26,8 +26,7 @@ export async function getAuthToken(): Promise<string> {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       clientId: CLIENT_ID,
-      clientSecret: CLIENT_SECRET,
-      grantType: 'client_credentials',
+      clientSecret: CLIENT_SECRET
     }),
     cache: 'no-store',
   });
